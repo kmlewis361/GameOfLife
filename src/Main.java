@@ -2,8 +2,8 @@ import processing.core.PApplet;
 
 public class Main extends PApplet {
     private final int CELL_SIZE = 10;
-    private final int NUM_ROWS = 100;
-    private final int NUM_COLUMNS = 50;
+    private final int NUM_ROWS = 50;
+    private final int NUM_COLUMNS = 100;
     private Cell[][] cells;
     private boolean evolve;
 
@@ -21,7 +21,7 @@ public class Main extends PApplet {
 
     //put size here (not in setup)
     public void settings() {
-        size(NUM_ROWS*CELL_SIZE, NUM_COLUMNS*CELL_SIZE);
+        size(NUM_COLUMNS*CELL_SIZE, NUM_ROWS*CELL_SIZE);
     }
 
     //init
@@ -29,7 +29,7 @@ public class Main extends PApplet {
         cells = new Cell[NUM_ROWS][NUM_COLUMNS];
         for(int r=0; r<NUM_ROWS; r++){
             for(int c=0; c<NUM_COLUMNS; c++){
-                cells[r][c] = new Cell(r*CELL_SIZE, c*CELL_SIZE, CELL_SIZE, r, c, CellState.DEAD);
+                cells[r][c] = new Cell(c*CELL_SIZE, r*CELL_SIZE, CELL_SIZE, r, c, CellState.DEAD);
             }
         }
     }
@@ -37,26 +37,34 @@ public class Main extends PApplet {
     //periodic
     public void draw() {
         if(evolve){
+         //   System.out.println("evolving!");
             applyRules();
+        //    System.out.println("applied!");
             evolve();
         }
         display();
     }
 
     public void mouseClicked(){
-
+        int r = mouseY/CELL_SIZE;
+        int c = mouseX/CELL_SIZE;
+        //println("r: " + r);
+        cells[r][c].handleClick();
     }
 
     public void keyPressed(){
-
+        evolve = !evolve;
+        println("evolve: " + evolve);
     }
 
     private void applyRules(){
         for(int r=0; r<NUM_ROWS; r++){
             for(int c=0; c<NUM_COLUMNS; c++){
                 cells[r][c].applyRules(cells);
+               // System.out.println("applying!");
             }
         }
+        //println("done applying!");
     }
 
     private void evolve(){
@@ -74,4 +82,5 @@ public class Main extends PApplet {
             }
         }
     }
+
 }
