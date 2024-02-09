@@ -26,10 +26,11 @@ public class Main extends PApplet {
 
     //init
     public void setup() {
+        MooreRules rules = new MooreRules(new int[]{3}, new int[]{2,3});
         cells = new Cell[NUM_ROWS][NUM_COLUMNS];
         for(int r=0; r<NUM_ROWS; r++){
             for(int c=0; c<NUM_COLUMNS; c++){
-                cells[r][c] = new Cell(c*CELL_SIZE, r*CELL_SIZE, CELL_SIZE, r, c, CellState.DEAD);
+                cells[r][c] = new Cell(c*CELL_SIZE, r*CELL_SIZE, CELL_SIZE, r, c, CellState.DEAD, rules);
             }
         }
     }
@@ -58,8 +59,8 @@ public class Main extends PApplet {
     }
 
     private void applyRules(){
-        for(int r=0; r<NUM_ROWS; r++){
-            for(int c=0; c<NUM_COLUMNS; c++){
+        for(int r=1; r<NUM_ROWS-1; r++){
+            for(int c=1; c<NUM_COLUMNS-1; c++){
                 cells[r][c].applyRules(cells);
                // System.out.println("applying!");
             }
