@@ -49,6 +49,10 @@ public class Cell {
         return cellState;
     }
 
+    public void setState(CellState state){
+        cellState = state;
+    }
+
     public int countLiveNeighbors(Cell[][] cells){
         int liveNeighbors = 0;
         for(int i=row-1; i<=row+1; i++){

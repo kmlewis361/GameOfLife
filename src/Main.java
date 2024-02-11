@@ -42,6 +42,7 @@ public class Main extends PApplet {
             applyRules();
         //    System.out.println("applied!");
             evolve();
+            delay(145);
         }
         display();
     }
@@ -56,6 +57,13 @@ public class Main extends PApplet {
     public void keyPressed(){
         evolve = !evolve;
         println("evolve: " + evolve);
+        if(key=='r'){
+            for(int r=0; r<NUM_ROWS; r++){
+                for(int c=0; c<NUM_COLUMNS; c++){
+                    cells[r][c].setState(CellState.DEAD);
+                }
+            }
+        }
     }
 
     private void applyRules(){
