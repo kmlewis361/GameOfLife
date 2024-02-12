@@ -1,16 +1,17 @@
 public class MooreRules {
     private static final int NUM_NEIGHBORS = 9;
-    private boolean[] birthRules;
-    private boolean[] survivalRules;
+    private boolean[] birthRules; //each index corresponds to a number of live neighbors
+    private boolean[] survivalRules; //same as above
 
     public MooreRules(int[] birthNeighbors, int[] survivalNeighbors){
+        //birthNeighbors and survivalNeighbors contain ints that correspond to acceptable number of live neighbors
         birthRules = new boolean[NUM_NEIGHBORS];
         survivalRules = new boolean[NUM_NEIGHBORS];
 
-        for(int neighbors: birthNeighbors){
+        for(int neighbors: birthNeighbors){ //go through birthNeighbors and convert every int to an index. set that index in birthRules to true
             birthRules[neighbors] = true;
         }
-        for(int neighbors: survivalNeighbors){
+        for(int neighbors: survivalNeighbors){ //same as above
             survivalRules[neighbors] = true;
         }
     }
