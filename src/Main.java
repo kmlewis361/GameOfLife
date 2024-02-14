@@ -4,9 +4,10 @@ public class Main extends PApplet {
     private final int CELL_SIZE = 20;
     private final int NUM_ROWS = 9;
     private final int NUM_COLUMNS = 19;
-    private final int DELAY = 145; //milliseconds of delay between generations
+    private final int DELAY = 300; //milliseconds of delay between generations
     private Cell[][] cells;
-    private boolean evolve;
+    private boolean antTime;
+    private Ant ant;
 
     //setting up PApplet
     public static Main app;
@@ -15,7 +16,7 @@ public class Main extends PApplet {
     }
     public Main() {
         app = this;
-        evolve = false;
+        antTime = false;
     }
 
     //put size here (not in setup)
@@ -25,59 +26,60 @@ public class Main extends PApplet {
 
     //init
     public void setup() {
-        MooreRules rules = new MooreRules(new int[]{3}, new int[]{2,3});
         cells = new Cell[NUM_ROWS][NUM_COLUMNS];
         for(int r=0; r<NUM_ROWS; r++){
             for(int c=0; c<NUM_COLUMNS; c++){
-                CellState state = CellState.DEAD;
-                if(r!=0 && r!=NUM_ROWS-1 && c!=0 && c!=NUM_COLUMNS-1){ //non-edges should be randomized
-                    if(Math.random()>0.5){
-                        state = CellState.ALIVE;
-                    }
-                }
-                cells[r][c] = new Cell(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, r, c, state, rules);
+                cells[r][c] = new Cell(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, r, c, false);
             }
         }
     }
 
     //periodic
     public void draw() {
-        if(evolve){
-            applyRules();
-            evolve();
-            delay(DELAY);
-        }
+        //delay(DELAY);
         display();
+        if(antTime){
+            ant.move(cells);
+            ant.display();
+            antTime=!antTime;
+        }
+
     }
 
     public void mouseClicked(){
         //which cell did you click?
         int r = mouseY/CELL_SIZE;
         int c = mouseX/CELL_SIZE;
-        cells[r][c].handleClick();
+        setup();
+        ant = new Ant(0,r, c, cells, CELL_SIZE);
+        antTime = true;
     }
 
     public void keyPressed(){
-        if(key=='r'){ //set them all to dead
-            for(int r=0; r<NUM_ROWS; r++){
-                for(int c=0; c<NUM_COLUMNS; c++){
-                    cells[r][c].setState(CellState.DEAD);
-                }
-            }
-        }else if(key=='n'){ //set them all to new random states
-            setup();
-        }else{
-            evolve = !evolve;
-        }
-    }
+        antTime = true;
 
-    private void applyRules(){
-        for(int r=1; r<NUM_ROWS-1; r++){
-            for(int c=1; c<NUM_COLUMNS-1; c++){
-                cells[r][c].applyRules(cells);
-            }
-        }
     }
+//    public void keyPressed(){
+//        if(key=='r'){ //set them all to dead
+//            for(int r=0; r<NUM_ROWS; r++){
+//                for(int c=0; c<NUM_COLUMNS; c++){
+//                    cells[r][c].flip();
+//                }
+//            }
+//        }else if(key=='n'){ //set them all to new random states
+//            setup();
+//        }else{
+//            evolve = !evolve;
+//        }
+//    }
+
+//    private void applyRules(){
+//        for(int r=1; r<NUM_ROWS-1; r++){
+//            for(int c=1; c<NUM_COLUMNS-1; c++){
+//                cells[r][c].applyRules(cells);
+//            }
+//        }
+//    }
 
     private void evolve(){
         for(int r=0; r<NUM_ROWS; r++){
