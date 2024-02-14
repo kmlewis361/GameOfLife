@@ -1,6 +1,6 @@
 public class Ant{
     private int orientation, r, c, size;
-    Cell[][] cells;
+    private Cell[][] cells;
     public Ant(int orientation, int r, int c, Cell[][] cells, int size){
         this.orientation = orientation;
         this.r = r;
@@ -9,8 +9,7 @@ public class Ant{
         this.size = size;
     }
 
-    public void display(){
-        Main.app.println("displaying ant");
+    public void display(){ //draw a red rect over the cell at [r][c]
         Main.app.fill(255,0,0);
         int x = cells[r][c].getX();
         int y = cells[r][c].getY();
@@ -18,20 +17,17 @@ public class Ant{
     }
 
     public void move(Cell[][] cells){
-       // Main.app.println(cells[r][c].getState());
+        //if white rotate clockwise, if black rotate counterclockwise
         if(cells[r][c].getState()){
-            rotate(-1);
-        }else{
             rotate(1);
+        }else{
+            rotate(-1);
         }
+        //flip the cell color
         cells[r][c].flip();
+        //move based on orientation
         if(orientation == 0){
             c++;
-//            if(c<cells[0].length-1) {
-//                c++;
-//            }else{
-//                rotate(1);
-//            }
         }else if(orientation == 90){
             r--;
         }else if(orientation == 180){
@@ -44,8 +40,7 @@ public class Ant{
 
     }
 
-    private void rotate(int direction){ //if direction is positive moves counterclockwise
-
+    private void rotate(int direction){ //if direction is positive moves counterclockwise (think unit circle)
         if(Math.signum(direction) == 1) {
             if (orientation < 270) {
                 orientation += 90;
@@ -53,7 +48,7 @@ public class Ant{
                 orientation = 0;
             }
         }else{
-            if(orientation>90){
+            if(orientation>0){
                 orientation -= 90;
             }else{
                 orientation = 270;

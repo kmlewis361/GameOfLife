@@ -1,7 +1,6 @@
 public class Cell {
     private int x, y, size, row, column;
     private boolean alive;
-    private MooreRules rules;
 
     /**
      * Constructs a new Cell with x, y, size, row, column, cellState, and rules parameters
@@ -20,11 +19,6 @@ public class Cell {
         this.column = column;
         this.alive = alive;
     }
-
-    public void evolve(){
-
-    }
-
     /**
      * draws the rect and determines the fill color
      */
@@ -37,14 +31,9 @@ public class Cell {
         Main.app.rect(x,y,size,size);
     }
 
-    public void handleClick(){
-
-    }
-
     public boolean getState(){
         return alive;
     }
-
 
     public void flip(){
         alive = !alive;
