@@ -105,10 +105,8 @@ public class Cell {
                     j = cells[0].length-1;
                 }
                 if(j>=cells[0].length){
-                    Main.app.println("going to zero!");
                     j = 0;
                 }
-                Main.app.println(i + ", " + j);
                 if (cells[i][j].getState()==CellState.ALIVE || cells[i][j].getState()==CellState.WILL_DIE){
                     liveNeighbors++;
                 }
