@@ -30,11 +30,11 @@ public class Main extends PApplet {
         for(int r=0; r<NUM_ROWS; r++){
             for(int c=0; c<NUM_COLUMNS; c++){
                 CellState state = CellState.DEAD;
-                if(r!=0 && r!=NUM_ROWS-1 && c!=0 && c!=NUM_COLUMNS-1){ //non-edges should be randomized
+               //if(r!=0 && r!=NUM_ROWS-1 && c!=0 && c!=NUM_COLUMNS-1){ //non-edges should be randomized
                     if(Math.random()>0.5){
                         state = CellState.ALIVE;
                     }
-                }
+              //  }
                 cells[r][c] = new Cell(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, r, c, state, rules);
             }
         }
@@ -72,8 +72,8 @@ public class Main extends PApplet {
     }
 
     private void applyRules(){
-        for(int r=1; r<NUM_ROWS-1; r++){
-            for(int c=1; c<NUM_COLUMNS-1; c++){
+        for(int r=0; r<NUM_ROWS; r++){
+            for(int c=0; c<NUM_COLUMNS; c++){
                 cells[r][c].applyRules(cells);
             }
         }

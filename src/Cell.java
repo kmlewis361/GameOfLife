@@ -90,15 +90,31 @@ public class Cell {
      * @return the number (int) of live neighbors
      */
     private int countLiveNeighbors(Cell[][] cells){
+
         int liveNeighbors = 0;
         for(int i=row-1; i<=row+1; i++){
-            for(int j=column-1; j<=column+1; j++){
-                if(i>=0 && i<cells.length && j>=0 && j<cells[0].length) {
-                    if (cells[i][j].getState()==CellState.ALIVE || cells[i][j].getState()==CellState.WILL_DIE){
-                        liveNeighbors++;
-                    }
-                }
+            int a = i;
+            if(i==-1){
+                i = cells.length-1;
+            }else if(i==cells.length){
+                i = 0;
             }
+            for(int j=column-1; j<=column+1; j++){
+                int b = j;
+                if(j<=-1){
+                    j = cells[0].length-1;
+                }
+                if(j>=cells[0].length){
+                    Main.app.println("going to zero!");
+                    j = 0;
+                }
+                Main.app.println(i + ", " + j);
+                if (cells[i][j].getState()==CellState.ALIVE || cells[i][j].getState()==CellState.WILL_DIE){
+                    liveNeighbors++;
+                }
+                j = b;
+            }
+            i = a;
         }
         if(cellState == cellState.ALIVE){
             liveNeighbors--;
