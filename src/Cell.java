@@ -1,3 +1,5 @@
+import static processing.core.PConstants.*;
+
 public class Cell {
     private int x, y, size, row, column;
     private CellState cellState;
@@ -54,7 +56,8 @@ public class Cell {
         }else{
             Main.app.fill(255);
         }
-        Main.app.rect(x,y,size,size);
+       // Main.app.rect(x,y,size,size);
+        drawHex(x,y,size);
     }
 
     /**
@@ -118,6 +121,23 @@ public class Cell {
             liveNeighbors--;
         }
         return liveNeighbors;
+    }
+
+    public void drawHex(int x, int y, int r){
+        Main.app.push();
+        Main.app.translate(x, y);
+        Main.app.stroke(0);
+        Main.app.beginShape();
+        float h = r/2*(float)Math.sqrt(3);
+        Main.app.vertex(x-r/2, y-h);
+        Main.app.vertex(x+r/2, y-h);
+        Main.app.vertex(x+r, y);
+        Main.app.vertex(x+r/2, y+h);
+        Main.app.vertex(x-r/2, y+h);
+        Main.app.vertex(x-r, y);
+        Main.app.endShape(CLOSE);
+        Main.app.pop();
+
     }
 
 }

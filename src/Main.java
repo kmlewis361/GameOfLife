@@ -1,9 +1,9 @@
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-    private final int CELL_SIZE = 20;
-    private final int NUM_ROWS = 9;
-    private final int NUM_COLUMNS = 19;
+    private final int CELL_SIZE = 10;
+    private final int NUM_ROWS = 45;
+    private final int NUM_COLUMNS = 54;
     private final int DELAY = 145; //milliseconds of delay between generations
     private Cell[][] cells;
     private boolean evolve;
@@ -27,27 +27,35 @@ public class Main extends PApplet {
     public void setup() {
         MooreRules rules = new MooreRules(new int[]{3}, new int[]{2,3});
         cells = new Cell[NUM_ROWS][NUM_COLUMNS];
+        double height = CELL_SIZE/2*Math.sqrt(3);
+        double offset = Math.sqrt(CELL_SIZE*CELL_SIZE - height*height);
         for(int r=0; r<NUM_ROWS; r++){
-            for(int c=0; c<NUM_COLUMNS; c++){
+            for(int c=0; c<NUM_COLUMNS; c++) {
                 CellState state = CellState.DEAD;
-               //if(r!=0 && r!=NUM_ROWS-1 && c!=0 && c!=NUM_COLUMNS-1){ //non-edges should be randomized
-                    if(Math.random()>0.5){
-                        state = CellState.ALIVE;
-                    }
-              //  }
-                cells[r][c] = new Cell(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, r, c, state, rules);
+                //if(r!=0 && r!=NUM_ROWS-1 && c!=0 && c!=NUM_COLUMNS-1){ //non-edges should be randomized
+                if (Math.random() > 0.5) {
+                    state = CellState.ALIVE;
+                }
+                //  }
+                if (r % 2 == 0) {
+                    cells[r][c] = new Cell((int)(c*CELL_SIZE*3 - offset), (int)(r * height ), CELL_SIZE*2, r, c, state, rules);
+                } else {
+                    cells[r][c] = new Cell((c*CELL_SIZE*3 )+ CELL_SIZE, (int)(r * height ), CELL_SIZE*2, r, c, state, rules);
+                }
             }
         }
     }
 
     //periodic
     public void draw() {
+
         if(evolve){
             applyRules();
             evolve();
             delay(DELAY);
         }
         display();
+       // Cell.drawHex(30,40,CELL_SIZE);
     }
 
     public void mouseClicked(){
