@@ -1,5 +1,5 @@
 public class MooreRules {
-    private static final int NUM_NEIGHBORS = 6;
+    private static final int NUM_NEIGHBORS = 7;
     private boolean[] birthRules; //each index corresponds to a number of live neighbors
     private boolean[] survivalRules; //same as above
 
