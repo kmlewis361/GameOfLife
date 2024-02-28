@@ -95,30 +95,17 @@ public class Cell {
     private int countLiveNeighbors(Cell[][] cells){
 
         int liveNeighbors = 0;
-        for(int i=row-1; i<=row+1; i++){
-            int a = i;
-            if(i==-1){
-                i = cells.length-1;
-            }else if(i==cells.length){
-                i = 0;
-            }
-            for(int j=column-1; j<=column+1; j++){
-                int b = j;
-                if(j<=-1){
-                    j = cells[0].length-1;
-                }
-                if(j>=cells[0].length){
-                    j = 0;
-                }
-                if (cells[i][j].getState()==CellState.ALIVE || cells[i][j].getState()==CellState.WILL_DIE){
+        int[] coord = {row - 2, column, row - 1, column - 1, row - 1, column, row + 1, column - 1, row + 1, column, row + 2, column};
+        if(row%2!=0) {
+            coord[3] = column+1;
+            coord[7] = column+1;
+        }
+        for(int i=0; i<12; i++) {
+            if(coord[i] >= 0 && coord[i] < cells.length && coord[i+1] >= 0 && coord[i+1] < cells[0].length) {
+                if (cells[coord[i]][coord[i + 1]].getState() == CellState.ALIVE || cells[coord[i]][coord[i + 1]].getState() == CellState.WILL_DIE) {
                     liveNeighbors++;
                 }
-                j = b;
             }
-            i = a;
-        }
-        if(cellState == cellState.ALIVE){
-            liveNeighbors--;
         }
         return liveNeighbors;
     }
