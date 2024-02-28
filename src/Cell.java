@@ -100,7 +100,7 @@ public class Cell {
             coord[3] = column+1;
             coord[7] = column+1;
         }
-        for(int i=0; i<12; i++) {
+        for(int i=0; i<11; i++) {
             if(coord[i] >= 0 && coord[i] < cells.length && coord[i+1] >= 0 && coord[i+1] < cells[0].length) {
                 if (cells[coord[i]][coord[i + 1]].getState() == CellState.ALIVE || cells[coord[i]][coord[i + 1]].getState() == CellState.WILL_DIE) {
                     liveNeighbors++;
