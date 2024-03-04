@@ -61,13 +61,13 @@ public class Main extends PApplet {
 
     public void mouseClicked(){
         //which cell did you click?
-        int c = (int)(mouseX/(int)(1.5*CELL_SIZE))/2;
+        int c = (int)(((mouseX+CELL_SIZE)/(int)(1.5*CELL_SIZE))/2 );
         int r = 0;
         if(c%2==0){
-            r = (int)(mouseY/(height*2))/2;
+            r = (int)(((mouseY+CELL_SIZE)/(height*2))/2 );
         }else {
 
-            r = (int)((mouseY - height)/(height*2))/2;
+            r = (int)(((mouseY+CELL_SIZE) - height)/(height*2))/2;
         }
         println(r + ", " + c);
         cells[r][c].handleClick();
