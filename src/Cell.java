@@ -87,6 +87,14 @@ public class Cell {
         cellState = state;
     }
 
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
+
     /**
      * returns the number of live neighbors (not including the current cell)
      * @param cells - the array of cells to read live neighbors from
