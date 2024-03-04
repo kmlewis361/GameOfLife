@@ -22,7 +22,7 @@ public class Main extends PApplet {
 
     //put size here (not in setup)
     public void settings() {
-        size(NUM_COLUMNS*CELL_SIZE, NUM_ROWS*CELL_SIZE);
+        size(NUM_COLUMNS*CELL_SIZE*2, NUM_ROWS*CELL_SIZE*2);
     }
 
     //init
@@ -38,10 +38,10 @@ public class Main extends PApplet {
                     state = CellState.ALIVE;
                 }
                 //  }
-                if (r % 2 == 0) {
-                    cells[r][c] = new Cell((int)(c*CELL_SIZE*3 - offset), (int)(r * height ), CELL_SIZE*2, r, c, state, rules);
+                if (c % 2 == 0) {
+                    cells[r][c] = new Cell((int)(c* (1.5 * CELL_SIZE )), (int)(r * height * 2), CELL_SIZE*2, r, c, state, rules);
                 } else {
-                    cells[r][c] = new Cell((c*CELL_SIZE*3 )+ CELL_SIZE, (int)(r * height ), CELL_SIZE*2, r, c, state, rules);
+                    cells[r][c] = new Cell((int)(c* (1.5* CELL_SIZE)), (int)(r * height * 2 + height), CELL_SIZE*2, r, c, state, rules);
                 }
             }
         }
@@ -60,25 +60,26 @@ public class Main extends PApplet {
     }
 
     public void mouseClicked(){
-//        //which cell did you click?
-//        int r = (int)(mouseY/CELL_SIZE);
-//        int c;
-//        if(r%2==0){
-//            c = (int)((mouseX+offset)/NUM_COLUMNS);
-//        }else {
-//            c = (int)((mouseX-CELL_SIZE)/NUM_COLUMNS);
-//        }
-//        println(r + ", " + c);
-//        cells[r][c].handleClick();
-        for(Cell[] c1 : cells){
-            for(Cell c : cells[0]){
-                if(mouseX <= (c.getX() + CELL_SIZE/2) && mouseX >= (c.getX() - CELL_SIZE/2)){
-                    if(mouseY <= (c.getY() + CELL_SIZE/2) && mouseY >= (c.getY() - CELL_SIZE/2)) {
-                       c.handleClick();
-                    }
-                }
-            }
+        //which cell did you click?
+        int c = (int)(mouseX/(int)(1.5*CELL_SIZE))/2;
+        int r = 0;
+        if(c%2==0){
+            r = (int)(mouseY/(height*2))/2;
+        }else {
+
+            r = (int)((mouseY - height)/(height*2))/2;
         }
+        println(r + ", " + c);
+        cells[r][c].handleClick();
+//        for(Cell[] c1 : cells){
+//            for(Cell c : cells[0]){
+//                if(mouseX <= (c.getX() + CELL_SIZE/2) && mouseX >= (c.getX() - CELL_SIZE/2)){
+//                    if(mouseY <= (c.getY() + CELL_SIZE/2) && mouseY >= (c.getY() - CELL_SIZE/2)) {
+//                       c.handleClick();
+//                    }
+//                }
+//            }
+//        }
     }
 
     public void keyPressed(){
